@@ -1,0 +1,126 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -----------------------------
+   Global Styling (Dark Theme)
+--------------------------------*/
+:root {
+  font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color-scheme: dark;
+  color: rgba(255, 255, 255, 0.9);
+  background-color: transparent;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* -----------------------------
+   Links
+--------------------------------*/
+a {
+  font-weight: 500;
+  color: #a78bfa; /* light purple */
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+a:hover {
+  color: #c084fc;
+}
+
+/* -----------------------------
+   Body & Root Setup
+--------------------------------*/
+body, html, #root {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+/* -----------------------------
+   Background Image
+--------------------------------*/
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('robot.png'); /* adjust if image in /public */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: -1;
+  opacity: 0.3; /* feel free to adjust 0.2–0.5 */
+}
+
+/* -----------------------------
+   Typography
+--------------------------------*/
+h1, h2, h3, p {
+  transition: all 0.3s ease;
+}
+
+/* -----------------------------
+   Buttons
+--------------------------------*/
+button {
+  border-radius: 12px;
+  border: none;
+  padding: 0.7em 1.4em;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(90deg, #8b5cf6, #ec4899);
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(236, 72, 153, 0.3);
+  transition: transform 0.25s, box-shadow 0.25s, background 0.3s ease;
+}
+
+button:hover {
+  transform: scale(1.08);
+  background: linear-gradient(90deg, #a855f7, #f472b6);
+  box-shadow: 0 8px 25px rgba(236, 72, 153, 0.5);
+}
+
+/* -----------------------------
+   Card / Glass Effect
+--------------------------------*/
+.bg-card, .bg-glass {
+  background: rgba(15, 23, 32, 0.55);
+  backdrop-filter: blur(14px);
+  border-radius: 1.5rem;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.35);
+  padding: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.bg-glass:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.45);
+}
+
+/* -----------------------------
+   Responsive Tweaks
+--------------------------------*/
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2.5rem;
+  }
+  h2 {
+    font-size: 1.8rem;
+  }
+  .bg-glass {
+    padding: 1rem;
+  }
+}
