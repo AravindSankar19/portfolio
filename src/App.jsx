@@ -38,14 +38,18 @@ export default function App() {
     }
   };
 
+  const base = import.meta.env.BASE_URL;
+
   return (
     <div className="relative min-h-screen text-white font-sans overflow-x-hidden">
 
-      {/* BACKGROUNDS */}
+      {/* BACKGROUND */}
       <div
         className="fixed inset-0 bg-cover bg-center bg-no-repeat z-0"
-        style={{ backgroundImage: "url('/robot.png')" }}
+        style={{ backgroundImage: `url(${base}robot.png)` }}
       />
+
+      {/* PARTICLES */}
       <Particles
         id="tsparticles"
         init={particlesInit}
@@ -65,7 +69,7 @@ export default function App() {
         className="fixed inset-0 z-0"
       />
 
-      {/* HAMBURGER BUTTON */}
+      {/* SIDEBAR */}
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="fixed top-6 left-6 z-50 text-white bg-black p-2 rounded-full hover:bg-gray-800 transition-none"
@@ -73,7 +77,6 @@ export default function App() {
         {isOpen ? "X" : "☰"}
       </button>
 
-      {/* SIDEBAR */}
       <AnimatePresence>
         {isOpen && (
           <motion.aside
@@ -84,16 +87,13 @@ export default function App() {
             style={{ backgroundColor: "#000", isolation: "isolate" }}
             className="fixed top-0 left-0 h-full w-64 z-50 p-8 flex flex-col space-y-6 border-r border-gray-800"
           >
-            {/* X button inside sidebar */}
             <button
               onClick={() => setIsOpen(false)}
               className="self-end text-white mb-4 p-1 hover:text-gray-400"
             >
               X
             </button>
-
             <h2 className="text-xl font-bold text-white mb-4">Navigate</h2>
-
             {sections.map((section) => (
               <button
                 key={section.id}
@@ -113,15 +113,12 @@ export default function App() {
         <About />
         <Experience />
         <Education />
-
         <Skills selectedSkill={selectedSkill} setSelectedSkill={setSelectedSkill} />
-
         <div className="text-center mt-6 mb-4">
           <p className="text-sm text-gray-300 italic">
             Click on a skill above to see projects specific to that skill
           </p>
         </div>
-
         {selectedSkill && <ProjectsFiltered selectedSkill={selectedSkill} />}
         <Projects />
         <Contact />

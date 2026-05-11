@@ -22,7 +22,7 @@
 --------------------------------*/
 a {
   font-weight: 500;
-  color: #a78bfa; /* light purple */
+  color: #a78bfa;
   text-decoration: none;
   transition: color 0.3s ease;
 }
@@ -44,24 +44,6 @@ body, html, #root {
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-}
-
-/* -----------------------------
-   Background Image
---------------------------------*/
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url('robot.png'); /* adjust if image in /public */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: -1;
-  opacity: 0.3; /* feel free to adjust 0.2–0.5 */
 }
 
 /* -----------------------------

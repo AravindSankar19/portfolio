@@ -1,17 +1,16 @@
+// experience.jsx
 import { motion } from "framer-motion";
 
 export default function Experience() {
   return (
     <div className="flex justify-center items-center gap-16 flex-wrap md:flex-nowrap">
       
-      {/* Robotics Intern Block */}
       <motion.div
         className="bg-glass p-8 rounded-3xl shadow-2xl flex-1 min-w-[320px] max-w-[420px] flex flex-col justify-between text-center"
         whileHover={{ scale: 1.05 }}
       >
-        {/* Logo */}
         <motion.img
-          src="/vividobots.ico"
+          src={`${import.meta.env.BASE_URL}vividobots.ico`}
           alt="Vividobots Logo"
           className="w-20 h-20 mx-auto mb-4 rounded-full object-contain bg-white/10 p-2"
           whileHover={{ rotate: 5 }}
@@ -37,7 +36,6 @@ export default function Experience() {
         </button>
       </motion.div>
 
-      {/* Creative Separator */}
       <div className="flex flex-col items-center justify-center relative mx-6">
         <motion.div
           className="text-white text-3xl"
@@ -49,14 +47,12 @@ export default function Experience() {
         <span className="mt-2 w-1 h-14 bg-gradient-to-b from-purple-500 to-pink-500 rounded-full animate-pulse"></span>
       </div>
 
-      {/* Technocrats Block */}
       <motion.div
         className="bg-glass p-8 rounded-3xl shadow-2xl flex-1 min-w-[320px] max-w-[420px] flex flex-col justify-between text-center"
         whileHover={{ scale: 1.05 }}
       >
-        {/* Logo */}
         <motion.img
-          src="/technocrats_logo.jpeg"
+          src={`${import.meta.env.BASE_URL}technocrats_logo.jpeg`}
           alt="Technocrats Robotics Logo"
           className="w-20 h-20 mx-auto mb-4 rounded-full object-contain bg-white/10 p-2"
           whileHover={{ rotate: -5 }}

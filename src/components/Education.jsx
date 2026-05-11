@@ -1,3 +1,4 @@
+// education.jsx
 import { motion } from "framer-motion";
 
 const educationData = [
@@ -5,27 +6,30 @@ const educationData = [
     institution: "University of Manchester", 
     degree: "MSc Robotics", 
     score: "2025 – Present", 
-    logo: "/logos/university_of_manchester.png" 
+    logo: `${import.meta.env.BASE_URL}university_of_manchester.png` 
   },
   { 
     institution: "Vellore Institute of Technology", 
     degree: "B.Tech in CSE (AI & Robotics)", 
     score: "CGPA: 8.5 | 2021 – 2025", 
-    logo: "/logos/vit.png" 
+    logo: `${import.meta.env.BASE_URL}vit.png` 
   },
   { 
     institution: "The Grove School (NIOS)", 
     degree: "Class XII", 
     score: "84.6%", 
-    logo: "/logos/nios.jpg" 
+    logo: `${import.meta.env.BASE_URL}nios.jpg` 
   },
   { 
     institution: "GSS Jain Vidyalaya", 
     degree: "Class X", 
     score: "86.8%", 
-    logo: "/logos/gss_jain.jpeg" 
+    logo: `${import.meta.env.BASE_URL}gss_jain.jpeg` 
   },
 ];
+
+// ... rest of your Education.jsx code remains the same
+
 
 export default function Education() {
   return (
@@ -64,9 +68,7 @@ export default function Education() {
               />
               
               {/* Institution Name */}
-              <p className="text-white font-extrabold text-3xl mb-1">
-                {edu.institution}
-              </p>
+              <p className="text-white font-extrabold text-3xl mb-1">{edu.institution}</p>
               
               {/* Degree and Score */}
               <p className="text-white font-semibold mb-1">{edu.degree}</p>
