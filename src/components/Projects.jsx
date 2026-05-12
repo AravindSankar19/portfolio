@@ -1,268 +1,358 @@
-// projects.jsx
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useRef } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const projects = [
   {
-    title: "Autonomous Nuclear Leakage Detection and Repair Robot",
-    description:
-      "Designed an autonomous TurtleBot-based inspection robot for nuclear environments. The system integrates SLAM-based navigation (RTAB-Map), computer vision for anomaly detection (OpenCV + CNN), and a robotic manipulator for simulated repair tasks in Gazebo. Focused on safety-critical autonomous decision-making in GPS-denied environments.",
-    technologies:
-      "ROS, Gazebo, MoveIt, RViz, RTAB-Map, SLAM, OpenCV, Python, Reinforcement Learning, CNN",
-    images: [
-      `${import.meta.env.BASE_URL}nuclear1.png`,
-      `${import.meta.env.BASE_URL}nuclear2.png`,
-    ],
-    links: {
-      github: "",
-      report: "",
-      demo: ""
-    }
+    id: 0,
+    tag: "Autonomous Robotics",
+    title: "Nuclear Leakage Detection & Repair Robot",
+    goal: "Enable fully autonomous inspection and simulated repair inside radiation-hazardous environments where human access is unsafe.",
+    contribution: "Designed the full ROS architecture, integrated RTAB-Map SLAM for GPS-denied navigation, built the CNN-based anomaly detection pipeline, and coordinated MoveIt manipulation for repair tasks.",
+    technologies: ["ROS", "Gazebo", "MoveIt", "RTAB-Map", "SLAM", "OpenCV", "Python", "RL", "CNN"],
+    images: ["nuclear1.png", "nuclear2.png"],
+    videos: [],
+    links: { github: "", report: "", demo: "" },
   },
-
   {
+    id: 1,
+    tag: "Mobile Robotics",
     title: "Autonomous Facade-Painting Robot",
-    description:
-      "Developed a ROS-powered autonomous wall-painting robot capable of mapping vertical surfaces and executing structured coverage paths. Integrated RTAB-Map for 3D reconstruction, navigation stack for motion planning, and real-time control for consistent spray coverage.",
-    technologies:
-      "ROS, RTAB-Map, Navigation Stack, Embedded Systems, Python, OpenCV",
-    images: [
-      `${import.meta.env.BASE_URL}vivid1.png`,
-      `${import.meta.env.BASE_URL}vivid2.png`,
-    ],
-    links: {
-      github: "",
-      report: "",
-      demo: ""
-    }
+    goal: "Automate wall-painting on vertical surfaces with structured coverage paths, eliminating manual scaffolding and improving consistency.",
+    contribution: "Built the ROS navigation stack integration, implemented 3D surface mapping with RTAB-Map, and developed the lawnmower coverage path planner with real-time spray control.",
+    technologies: ["ROS", "RTAB-Map", "Nav Stack", "Embedded Systems", "Python", "OpenCV"],
+    images: ["vivid1.png", "vivid2.png"],
+    videos: [],
+    links: { github: "", report: "", demo: "" },
   },
-
   {
+    id: 2,
+    tag: "Space Robotics",
     title: "Space Rover for Planetary Exploration",
-    description:
-      "Built a semi-autonomous rover for rough terrain exploration with onboard perception and control systems. Implemented SLAM-based mapping, real-time camera streaming (RTSP), and modular ROS architecture for task execution in simulated planetary environments.",
-    technologies: "ROS, SLAM, OpenCV, PyQt, RTSP, Python",
-    images: [
-      `${import.meta.env.BASE_URL}technocrats1.png`,
-      `${import.meta.env.BASE_URL}technocrats2.jpg`,
-    ],
-    links: {
-      github: "",
-      report: "",
-      demo: ""
-    }
+    goal: "Build a semi-autonomous rover capable of navigating rough planetary terrain and streaming real-time telemetry to a ground station.",
+    contribution: "Developed the modular ROS task execution system, implemented SLAM-based localisation, and built the RTSP camera streaming pipeline integrated with the PyQt ground station UI.",
+    technologies: ["ROS", "SLAM", "OpenCV", "PyQt", "RTSP", "Python"],
+    images: ["technocrats1.png", "technocrats2.jpg"],
+    videos: [],
+    links: { github: "", report: "", demo: "" },
   },
-
   {
+    id: 3,
+    tag: "Manipulation",
     title: "6-DOF Robotic Arm with Soft Gripper",
-    description:
-      "Designed and optimized a 6-DOF robotic arm with a soft gripper to improve grasp stability under torque-limited actuators. Integrated inverse kinematics with MoveIt for trajectory planning and tested pick-and-place operations in ROS simulation.",
-    technologies:
-      "ROS, MoveIt, Python, CAD Design, Embedded Systems",
-    images: [
-      `${import.meta.env.BASE_URL}6DOF.webp`,
-      `${import.meta.env.BASE_URL}6DOF-2.webp`,
-    ],
-    links: {
-      github: "",
-      report: "",
-      demo: ""
-    }
+    goal: "Improve grasp stability of torque-limited actuators through soft gripper design and optimised inverse kinematics.",
+    contribution: "Redesigned the gripper geometry in CAD to distribute contact forces, integrated IK solvers in MoveIt, and validated pick-and-place performance across object geometries in ROS simulation.",
+    technologies: ["ROS", "MoveIt", "Python", "CAD", "Embedded Systems"],
+    images: ["6DOF.webp", "6DOF-2.webp"],
+    videos: [],
+    links: { github: "", report: "", demo: "" },
   },
-
   {
-    title: "Employee Onboarding Automation using UiPath",
-    description:
-      "Developed an RPA workflow using UiPath to automate employee onboarding tasks including form processing, email automation, and Excel-based record updates. Reduced manual onboarding time significantly through process automation.",
-    technologies:
-      "UiPath, Excel, Email Automation, Web Scraping",
-    images: [
-      `${import.meta.env.BASE_URL}uipath1.png`,
-      `${import.meta.env.BASE_URL}uipath2.png`,
+    id: 4,
+    tag: "Autonomous Robotics",
+    title: "Leo Rover – Autonomous Pick & Sort System",
+    goal: "Design an autonomous ROS 2–based Leo Rover system capable of detecting, picking, and sorting shaped cubes into bins of the corresponding colour.",
+    contribution: "Contributed to the rover's autonomous navigation system and developed a custom GUI for controlling and launching all system operations.",
+    technologies: ["ROS 2", "Leo Rover", "Python", "Navigation", "Computer Vision", "GUI", "OpenCV"],
+    images: [],
+    videos: [
+      { src: "ui.mp4",     label: "Custom GUI" },
+      { src: "navLeo.mp4", label: "Autonomous Navigation" },
     ],
-    links: {
-      github: "",
-      report: "",
-      demo: ""
-    }
+    links: { github: "", report: "", demo: "" },
   },
-
   {
-    title: "Vision Model Fine-Tuning Using DPO",
-    description:
-      "Fine-tuned the Qwen vision-language model using Direct Preference Optimization (DPO) to improve alignment with human preference data. Worked on dataset curation, preference ranking, and training stability for multimodal LLM optimization.",
-    technologies:
-      "DPO, Qwen Model, LLaMA, Python, Deep Learning",
-    images: [
-      `${import.meta.env.BASE_URL}dpo1.png`,
-      `${import.meta.env.BASE_URL}dpo2.png`,
-    ],
-    links: {
-      github: "",
-      report: "",
-      demo: ""
-    }
+    id: 5,
+    tag: "Automation",
+    title: "Employee Onboarding Automation – UiPath",
+    goal: "Reduce manual HR workload by automating repetitive onboarding steps: form filling, email dispatch, and record management.",
+    contribution: "Designed and implemented the end-to-end UiPath workflow, built Excel integration for record updates, and created error-handling routines that cut manual onboarding time by ~70%.",
+    technologies: ["UiPath", "Excel", "Email Automation", "Web Scraping"],
+    images: ["uipath1.png", "uipath2.png"],
+    videos: [],
+    links: { github: "", report: "", demo: "" },
   },
-
   {
-    title: "IMU-Based Athlete Speed Monitoring and Django Dashboard",
-    description:
-      "Built a real-time athlete performance monitoring system using IMU sensors and a Django dashboard. Captured motion data via Arduino, processed signals in Python, and visualized speed analytics through REST APIs and web interface.",
-    technologies:
-      "Arduino, Django, Python, REST APIs, HTML/CSS, Data Visualization",
-    images: [
-      `${import.meta.env.BASE_URL}django.jpg`,
-      `${import.meta.env.BASE_URL}imu.jpeg`,
-    ],
-    links: {
-      github: "",
-      report: "",
-      demo: ""
-    }
-  }
+    id: 6,
+    tag: "Machine Learning",
+    title: "Vision Model Fine-Tuning via DPO",
+    goal: "Improve alignment of the Qwen vision-language model with human preferences using Direct Preference Optimization.",
+    contribution: "Curated the preference dataset, implemented the DPO training loop, and tuned hyperparameters to achieve stable multimodal alignment without reward model collapse.",
+    technologies: ["DPO", "Qwen", "LLaMA", "Python", "Deep Learning"],
+    images: ["dpo1.png", "dpo2.png"],
+    videos: [],
+    links: { github: "", report: "", demo: "" },
+  },
+  {
+    id: 7,
+    tag: "IoT & Web",
+    title: "IMU Athlete Speed Monitor & Django Dashboard",
+    goal: "Give coaches real-time athlete speed analytics through a browser dashboard driven by wearable IMU sensors.",
+    contribution: "Wired the Arduino IMU data pipeline, built signal-processing filters in Python, exposed a Django REST API, and designed the live chart interface for the web dashboard.",
+    technologies: ["Arduino", "Django", "Python", "REST APIs", "HTML/CSS", "Data Viz"],
+    images: ["django.jpg", "imu.jpeg"],
+    videos: [],
+    links: { github: "", report: "", demo: "" },
+  },
 ];
-// ... rest of your Projects.jsx code remains the same
 
-
-const formatTechnologies = (techString) => {
-  return techString.split(',').map(tech => tech.trim()).join(' | ');
+const TAG_COLORS = {
+  "Autonomous Robotics": ["#00f5ff", "rgba(0,245,255,0.12)"],
+  "Mobile Robotics":     ["#a78bfa", "rgba(167,139,250,0.12)"],
+  "Space Robotics":      ["#38bdf8", "rgba(56,189,248,0.12)"],
+  "Manipulation":        ["#fb923c", "rgba(251,146,60,0.12)"],
+  "Automation":          ["#34d399", "rgba(52,211,153,0.12)"],
+  "Machine Learning":    ["#f472b6", "rgba(244,114,182,0.12)"],
+  "IoT & Web":           ["#facc15", "rgba(250,204,21,0.12)"],
 };
 
-const variants = {
-  enter: (direction) => ({
-    x: direction > 0 ? 1000 : -1000,
-    opacity: 0,
-    scale: 0.9,
-  }),
-  center: {
-    zIndex: 1,
-    x: 0,
-    opacity: 1,
-    scale: 1,
-    transition: { type: 'spring', stiffness: 300, damping: 30 },
-  },
-  exit: (direction) => ({
-    zIndex: 0,
-    x: direction < 0 ? 1000 : -1000,
-    opacity: 0,
-    scale: 0.9,
-    transition: { type: 'tween', duration: 0.3 },
-  }),
+const GHIcon   = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/></svg>;
+const DocIcon  = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>;
+const PlayIcon = () => <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>;
+
+const slideVariants = {
+  enter: (d) => ({ x: d > 0 ? 80 : -80, opacity: 0 }),
+  center: { x: 0, opacity: 1, transition: { type: "spring", stiffness: 280, damping: 28 } },
+  exit:   (d) => ({ x: d < 0 ? 80 : -80, opacity: 0, transition: { duration: 0.2 } }),
 };
+
+function VideoPlayer({ src, label, base }) {
+  return (
+    <div style={{
+      flex: 1, position: "relative",
+      borderRadius: 12, overflow: "hidden",
+      border: "1px solid rgba(255,255,255,0.1)",
+      background: "#000",
+    }}>
+      <video
+        src={`${base}${src}`}
+        controls
+        muted
+        playsInline
+        style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+      />
+      <span style={{
+        position: "absolute", top: 8, left: 8,
+        fontFamily: "var(--font-mono)", fontSize: "0.62rem",
+        padding: "3px 8px", borderRadius: 999,
+        background: "rgba(0,0,0,0.75)",
+        border: "1px solid rgba(255,255,255,0.15)",
+        color: "rgba(255,255,255,0.85)",
+        pointerEvents: "none",
+      }}>
+        {label}
+      </span>
+    </div>
+  );
+}
+
+function MediaRow({ project, base }) {
+  const hasImages = project.images.length > 0;
+  const hasVideos = project.videos.length > 0;
+  if (!hasImages && !hasVideos) return null;
+
+  // Video-only (Leo Rover): taller, side by side
+  if (!hasImages && hasVideos) {
+    return (
+      <div style={{ display: "flex", gap: 10, marginBottom: 20, height: 210 }}>
+        {project.videos.map((v, i) => (
+          <VideoPlayer key={i} src={v.src} label={v.label} base={base} />
+        ))}
+      </div>
+    );
+  }
+
+  // Images (+ optional videos)
+  return (
+    <div style={{ display: "flex", gap: 10, marginBottom: 20, height: 200 }}>
+      {project.images.map((img, i) => (
+        <div key={`img-${i}`} style={{
+          flex: 1, borderRadius: 12, overflow: "hidden",
+          border: "1px solid rgba(255,255,255,0.08)",
+        }}>
+          <img
+            src={`${base}${img}`}
+            alt={`${project.title} ${i + 1}`}
+            style={{ width: "100%", height: "100%", objectFit: "cover" }}
+          />
+        </div>
+      ))}
+      {project.videos.map((v, i) => (
+        <VideoPlayer key={`vid-${i}`} src={v.src} label={v.label} base={base} />
+      ))}
+    </div>
+  );
+}
 
 export default function Projects() {
-  const [[page, direction], setPage] = useState([0, 0]);
+  const [[page, dir], setPage] = useState([0, 0]);
+  const base = import.meta.env.BASE_URL;
 
-  const paginate = (newDirection) => {
-    const newPage = (page + newDirection + projects.length) % projects.length;
-    setPage([newPage, newDirection]);
-  };
-
-  const currentProject = projects[page];
-  const hasImages = currentProject.images && currentProject.images.length > 0;
+  const go = (d) => setPage(([p]) => [(p + d + projects.length) % projects.length, d]);
+  const current = projects[page];
+  const [accent, accentBg] = TAG_COLORS[current.tag] ?? ["#00f5ff", "rgba(0,245,255,0.1)"];
 
   return (
     <motion.section
       id="projects"
-      className="py-20 px-6 max-w-7xl mx-auto relative overflow-hidden" 
+      style={{ padding: "100px 24px", maxWidth: 860, margin: "0 auto" }}
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
-      viewport={{ once: true }}
-      transition={{ duration: 1 }}
+      viewport={{ once: true, amount: 0.1 }}
+      transition={{ duration: 0.8 }}
     >
-      <h2 className="text-4xl font-extrabold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-cyan-400">
-        🔬 Projects & Research
-      </h2>
-
-      {/* SLIDER */}
-      <div className="relative w-full flex justify-center mb-12" style={{ minHeight: '650px' }}>
-        <AnimatePresence initial={false} custom={direction}>
-          <motion.div
-            key={page}
-            custom={direction}
-            variants={variants}
-            initial="enter"
-            animate="center"
-            exit="exit"
-            className="absolute top-0 w-full h-full flex justify-center"
-          >
-            <div className="bg-glass p-8 rounded-2xl shadow-2xl flex flex-col justify-between w-full max-w-xl h-full border border-transparent relative text-center">
-              
-              <div>
-                <p className="text-cyan-400 font-extrabold text-2xl mb-4">{currentProject.title}</p>
-                <p className="text-gray-300 text-base leading-relaxed mb-6">{currentProject.description}</p>
-              </div>
-              
-              {hasImages && (
-                <div className={`mb-6 p-2 rounded-lg bg-black/30 mx-auto transition-all ${
-                  currentProject.images.length > 1
-                    ? 'grid grid-cols-2 gap-4 max-w-sm place-items-center'
-                    : 'flex justify-center'
-                }`}>
-                  {currentProject.images.map((imageSrc, idx) => (
-                    <img
-                      key={idx}
-                      src={imageSrc}
-                      alt={`${currentProject.title} - Image ${idx + 1}`}
-                      className="h-20 object-cover rounded-md shadow-md w-full border border-purple-500/30 transition-shadow hover:shadow-lg"
-                    />
-                  ))}
-                </div>
-              )}
-
-              {!hasImages && (
-                <div className="h-10 flex items-center justify-center mb-6 text-gray-500/50">
-                  <p className="text-sm">No visuals available</p>
-                </div>
-              )}
-
-              <div className="mt-auto pt-4 border-t border-purple-900/50"> 
-                <p className="text-sm font-bold text-white mb-2">Technology used</p>
-                <p className="text-sm font-semibold text-purple-400">{formatTechnologies(currentProject.technologies)}</p>
-              </div>
-              
-            </div>
-          </motion.div>
-        </AnimatePresence>
+      {/* Header */}
+      <div style={{ textAlign: "center", marginBottom: 48 }}>
+        <p className="section-label" style={{ marginBottom: 12 }}>Selected Work</p>
+        <h2 style={{
+          fontSize: "clamp(2rem, 5vw, 3rem)", fontWeight: 900,
+          background: "linear-gradient(135deg, #ffffff, rgba(0,245,255,0.8))",
+          WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+          marginBottom: 16,
+        }}>
+          Projects & Research
+        </h2>
+        <div className="h-divider" />
       </div>
 
-      {/* NAVIGATION */}
-      <div className="flex justify-center w-full"> 
-        <div className="flex justify-between items-center w-full max-w-xs px-4 z-50"> 
-          <button 
-            className="text-4xl text-pink-500 hover:text-white transition-colors p-3 rounded-full bg-black/50 hover:bg-black/80"
-            onClick={() => paginate(-1)} 
-          >{'<'}</button>
+      {/* Card — no fixed minHeight, let content define height */}
+      <AnimatePresence custom={dir} mode="wait">
+        <motion.div
+          key={page}
+          custom={dir}
+          variants={slideVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          className="glass"
+          style={{ padding: "32px 36px", width: "100%" }}
+        >
+          {/* Tag + counter */}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
+            <span style={{
+              fontFamily: "var(--font-mono)", fontSize: "0.68rem",
+              padding: "4px 12px", borderRadius: 999,
+              background: accentBg, border: `1px solid ${accent}44`, color: accent,
+            }}>
+              {current.tag}
+            </span>
+            <span style={{ fontFamily: "var(--font-mono)", fontSize: "0.7rem", color: "rgba(255,255,255,0.28)" }}>
+              {String(page + 1).padStart(2, "0")} / {String(projects.length).padStart(2, "0")}
+            </span>
+          </div>
 
-          <div className="flex justify-center items-center space-x-3 p-2 rounded-full">
-            {projects.map((_, index) => {
-              const isActive = index === page;
+          {/* Title */}
+          <h3 style={{ fontSize: "1.3rem", fontWeight: 800, color: "#fff", marginBottom: 18, lineHeight: 1.3 }}>
+            {current.title}
+          </h3>
+
+          {/* Media */}
+          <MediaRow project={current} base={base} />
+
+          {/* Goal + Contribution */}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 14, marginBottom: 18 }}>
+            {[
+              { label: "Goal",            text: current.goal,         color: "#00f5ff" },
+              { label: "My Contribution", text: current.contribution, color: "#f472b6" },
+            ].map(({ label, text, color }) => (
+              <div key={label} style={{
+                background: "rgba(255,255,255,0.03)",
+                border: `1px solid ${color}22`,
+                borderLeft: `3px solid ${color}`,
+                borderRadius: "0 10px 10px 0",
+                padding: "11px 14px",
+              }}>
+                <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.62rem", letterSpacing: "0.12em", color, textTransform: "uppercase", marginBottom: 5 }}>
+                  {label}
+                </p>
+                <p style={{ fontSize: "0.81rem", color: "rgba(255,255,255,0.68)", lineHeight: 1.55 }}>
+                  {text}
+                </p>
+              </div>
+            ))}
+          </div>
+
+          {/* Tech pills */}
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginBottom: 18 }}>
+            {current.technologies.map((t) => (
+              <span key={t} className="pill">{t}</span>
+            ))}
+          </div>
+
+          {/* Links */}
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {[
+              { key: "github", Icon: GHIcon,   label: "GitHub" },
+              { key: "report", Icon: DocIcon,  label: "Report" },
+              { key: "demo",   Icon: PlayIcon, label: "Demo"   },
+            ].map(({ key, Icon, label }) => {
+              const href = current.links[key];
               return (
-                <div
-                  key={index}
-                  className={`w-3 h-3 rounded-full cursor-pointer transition-colors relative ${
-                    isActive ? 'bg-transparent' : 'bg-gray-700 hover:bg-gray-500'
-                  }`}
-                  onClick={() => setPage([index, index > page ? 1 : -1])}
+                <a
+                  key={key}
+                  href={href || "#"}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={e => { if (!href) e.preventDefault(); }}
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: 6,
+                    padding: "6px 14px", borderRadius: 999,
+                    border: "1px solid rgba(255,255,255,0.12)",
+                    color: href ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.22)",
+                    fontSize: "0.76rem", fontWeight: 500,
+                    textDecoration: "none",
+                    cursor: href ? "pointer" : "default",
+                    transition: "all 0.18s",
+                  }}
+                  onMouseEnter={e => { if (href) { e.currentTarget.style.background = "rgba(255,255,255,0.08)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; }}}
+                  onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; }}
                 >
-                  {isActive && (
-                    <motion.div
-                      className="w-full h-full rounded-full bg-gradient-to-br from-pink-500 to-purple-600"
-                      layoutId="projectIndicator" 
-                      transition={{ type: "spring", stiffness: 400, damping: 20 }}
-                    />
-                  )}
-                </div>
+                  <Icon /> {label}
+                </a>
               );
             })}
           </div>
+        </motion.div>
+      </AnimatePresence>
 
-          <button 
-            className="text-4xl text-pink-500 hover:text-white transition-colors p-3 rounded-full bg-black/50 hover:bg-black/80"
-            onClick={() => paginate(1)} 
-          >{'>'}</button>
+      {/* Navigation — fixed 24px gap below card, no more hardcoded 580px */}
+      <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 20, marginTop: 24 }}>
+        <NavBtn onClick={() => go(-1)} dir="left" />
+        <div style={{ display: "flex", gap: 7, alignItems: "center" }}>
+          {projects.map((_, i) => (
+            <motion.button
+              key={i}
+              onClick={() => setPage([i, i > page ? 1 : -1])}
+              animate={{
+                width: i === page ? 22 : 7,
+                background: i === page ? "#00f5ff" : "rgba(255,255,255,0.2)",
+              }}
+              transition={{ duration: 0.25 }}
+              style={{ height: 7, borderRadius: 4, border: "none", padding: 0, cursor: "pointer" }}
+            />
+          ))}
         </div>
+        <NavBtn onClick={() => go(1)} dir="right" />
       </div>
     </motion.section>
+  );
+}
+
+function NavBtn({ onClick, dir }) {
+  return (
+    <motion.button
+      onClick={onClick}
+      whileHover={{ scale: 1.1 }}
+      whileTap={{ scale: 0.92 }}
+      style={{
+        width: 42, height: 42, borderRadius: "50%",
+        border: "1px solid rgba(255,255,255,0.15)",
+        background: "rgba(255,255,255,0.05)",
+        color: "rgba(255,255,255,0.8)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        cursor: "pointer", fontSize: "1rem",
+      }}
+    >
+      {dir === "left" ? "←" : "→"}
+    </motion.button>
   );
 }

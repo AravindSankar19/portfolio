@@ -12,6 +12,26 @@ import Projects from "./components/Projects";
 import Contact from "./components/Contact";
 import Education from "./components/Education";
 
+const sections = [
+  { id: "hero",       label: "Home" },
+  { id: "about",      label: "About" },
+  { id: "experience", label: "Experience" },
+  { id: "education",  label: "Education" },
+  { id: "skills",     label: "Skills" },
+  { id: "projects",   label: "Projects" },
+  { id: "contact",    label: "Contact" },
+];
+
+function SectionDivider() {
+  return (
+    <div style={{
+      width: "100%", maxWidth: 860, margin: "0 auto",
+      height: 1,
+      background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.07), transparent)",
+    }} />
+  );
+}
+
 export default function App() {
   const [selectedSkill, setSelectedSkill] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
@@ -20,36 +40,34 @@ export default function App() {
     await loadFull(engine);
   }, []);
 
-  const sections = [
-    { id: "hero", label: "Home" },
-    { id: "about", label: "About" },
-    { id: "experience", label: "Experience" },
-    { id: "education", label: "Education" },
-    { id: "skills", label: "Skills" },
-    { id: "projects", label: "Projects" },
-    { id: "contact", label: "Contact" },
-  ];
-
   const handleScroll = (id) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-      setIsOpen(false);
-    }
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    setIsOpen(false);
   };
 
   const base = import.meta.env.BASE_URL;
 
   return (
-    <div className="relative min-h-screen text-white font-sans overflow-x-hidden">
+    <div style={{ position: "relative", minHeight: "100vh", color: "#fff", overflowX: "hidden" }}>
 
-      {/* BACKGROUND */}
-      <div
-        className="fixed inset-0 bg-cover bg-center bg-no-repeat z-0"
-        style={{ backgroundImage: `url(${base}robot.png)` }}
-      />
+      {/* Background image */}
+      <div style={{
+        position: "fixed", inset: 0,
+        backgroundImage: `url(${base}robot.png)`,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+        zIndex: 0,
+      }} />
 
-      {/* PARTICLES */}
+      {/* Dark overlay for readability */}
+      <div style={{
+        position: "fixed", inset: 0,
+        background: "linear-gradient(180deg, rgba(0,0,8,0.85) 0%, rgba(0,0,8,0.75) 100%)",
+        zIndex: 0,
+      }} />
+
+      {/* Particles */}
       <Particles
         id="tsparticles"
         init={particlesInit}
@@ -58,69 +76,120 @@ export default function App() {
           fpsLimit: 60,
           interactivity: { events: { onHover: { enable: true, mode: "repulse" } } },
           particles: {
-            color: { value: "#00f0ff" },
-            links: { enable: true, color: "#00f0ff", distance: 120 },
-            move: { enable: true, speed: 1 },
-            number: { value: 60 },
-            opacity: { value: 0.6 },
-            size: { value: { min: 1, max: 4 } },
+            color: { value: "#00f5ff" },
+            links: { enable: true, color: "#00f5ff", distance: 120, opacity: 0.2 },
+            move: { enable: true, speed: 0.6 },
+            number: { value: 40 },
+            opacity: { value: 0.3 },
+            size: { value: { min: 1, max: 2.5 } },
           },
         }}
-        className="fixed inset-0 z-0"
+        style={{ position: "fixed", inset: 0, zIndex: 0 }}
       />
 
-      {/* SIDEBAR */}
+      {/* ── Sidebar toggle ── */}
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="fixed top-6 left-6 z-50 text-white bg-black p-2 rounded-full hover:bg-gray-800 transition-none"
+        style={{
+          position: "fixed", top: 20, left: 20,
+          zIndex: 60,
+          width: 40, height: 40,
+          borderRadius: 10,
+          background: "rgba(0,0,0,0.7)",
+          border: "1px solid rgba(255,255,255,0.12)",
+          color: "#fff",
+          display: "flex", alignItems: "center", justifyContent: "center",
+          cursor: "pointer",
+          backdropFilter: "blur(10px)",
+          fontSize: "1.1rem",
+        }}
       >
-        {isOpen ? "X" : "☰"}
+        {isOpen ? "✕" : "☰"}
       </button>
 
+      {/* ── Sidebar ── */}
       <AnimatePresence>
         {isOpen && (
-          <motion.aside
-            initial={{ x: -250, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            exit={{ x: -250, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 120, damping: 20 }}
-            style={{ backgroundColor: "#000", isolation: "isolate" }}
-            className="fixed top-0 left-0 h-full w-64 z-50 p-8 flex flex-col space-y-6 border-r border-gray-800"
-          >
-            <button
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
               onClick={() => setIsOpen(false)}
-              className="self-end text-white mb-4 p-1 hover:text-gray-400"
+              style={{
+                position: "fixed", inset: 0,
+                background: "rgba(0,0,0,0.4)",
+                zIndex: 55,
+              }}
+            />
+
+            {/* Panel */}
+            <motion.aside
+              initial={{ x: -260, opacity: 0 }}
+              animate={{ x: 0, opacity: 1 }}
+              exit={{ x: -260, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 140, damping: 22 }}
+              style={{
+                position: "fixed", top: 0, left: 0,
+                height: "100%", width: 240,
+                zIndex: 56,
+                background: "rgba(4,4,12,0.97)",
+                borderRight: "1px solid rgba(255,255,255,0.07)",
+                backdropFilter: "blur(20px)",
+                display: "flex", flexDirection: "column",
+                padding: "72px 24px 32px",
+              }}
             >
-              X
-            </button>
-            <h2 className="text-xl font-bold text-white mb-4">Navigate</h2>
-            {sections.map((section) => (
-              <button
-                key={section.id}
-                onClick={() => handleScroll(section.id)}
-                className="text-gray-300 text-lg text-left hover:text-white transition-none"
-              >
-                {section.label}
-              </button>
-            ))}
-          </motion.aside>
+              <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.65rem", letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)", marginBottom: 24 }}>
+                Navigate
+              </p>
+              {sections.map((s, i) => (
+                <motion.button
+                  key={s.id}
+                  initial={{ opacity: 0, x: -16 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: i * 0.05 }}
+                  onClick={() => handleScroll(s.id)}
+                  style={{
+                    background: "none", border: "none",
+                    color: "rgba(255,255,255,0.65)",
+                    fontSize: "1rem", fontWeight: 500,
+                    textAlign: "left",
+                    padding: "10px 0",
+                    cursor: "pointer",
+                    fontFamily: "var(--font-display)",
+                    borderBottom: "1px solid rgba(255,255,255,0.04)",
+                    transition: "color 0.2s",
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.color = "#00f5ff"; }}
+                  onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.65)"; }}
+                >
+                  {s.label}
+                </motion.button>
+              ))}
+            </motion.aside>
+          </>
         )}
       </AnimatePresence>
 
-      {/* MAIN CONTENT */}
-      <div className="relative z-10">
+      {/* ── Main content ── */}
+      <div style={{ position: "relative", zIndex: 10 }}>
         <Hero />
+        <SectionDivider />
         <About />
+        <SectionDivider />
         <Experience />
+        <SectionDivider />
         <Education />
+        <SectionDivider />
         <Skills selectedSkill={selectedSkill} setSelectedSkill={setSelectedSkill} />
-        <div className="text-center mt-6 mb-4">
-          <p className="text-sm text-gray-300 italic">
-            Click on a skill above to see projects specific to that skill
-          </p>
-        </div>
-        {selectedSkill && <ProjectsFiltered selectedSkill={selectedSkill} />}
+        <AnimatePresence>
+          {selectedSkill && <ProjectsFiltered selectedSkill={selectedSkill} />}
+        </AnimatePresence>
+        <SectionDivider />
         <Projects />
+        <SectionDivider />
         <Contact />
       </div>
     </div>

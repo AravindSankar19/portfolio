@@ -1,110 +1,127 @@
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 const projects = [
   {
     title: "Autonomous Nuclear Leakage Detection and Repair Robot",
-    description: "This project focuses on developing a TurtleBot manipulator...",
-    technologies: "ROS, Gazebo, MoveIt, RViz, RTAB-Map, SLAM, OpenCV, Python, Reinforcement Learning, CNNs"
+    description: "Autonomous TurtleBot inspection robot for nuclear environments with SLAM navigation, CNN-based anomaly detection, and simulated repair via MoveIt.",
+    technologies: "ROS, Gazebo, MoveIt, RViz, RTAB-Map, SLAM, OpenCV, Python, Reinforcement Learning, CNNs",
   },
   {
     title: "Autonomous Facade-Painting Robot",
-    description: "This project involves the development of a robotic system...",
-    technologies: "ROS, RTAB-Map, Navigation Stack, Embedded Systems, Python, Computer Vision, MQTT"
+    description: "ROS-powered wall-painting robot with 3D surface mapping, structured coverage path planning, and real-time spray control.",
+    technologies: "ROS, RTAB-Map, Navigation Stack, Embedded Systems, Python, Computer Vision, MQTT",
   },
   {
     title: "Space Rover for Planetary Exploration",
-    description: "Developed as part of the Technocrats Robotics team...",
-    technologies: "ROS, SLAM, OpenCV, PyQt, RTSP, Python, Raspberry pi"
+    description: "Semi-autonomous planetary rover with SLAM-based localisation, RTSP camera streaming, and a PyQt ground station interface.",
+    technologies: "ROS, SLAM, OpenCV, PyQt, RTSP, Python, Raspberry Pi",
   },
   {
     title: "6-DOF Robotic Arm with Soft Gripper",
-    description: "A 6-degree-of-freedom robotic arm was designed and optimized...",
-    technologies: "ROS, MoveIt, Python, CAD Design, Embedded Systems"
+    description: "Optimised robotic arm with soft gripper for improved grasp stability using IK solvers and MoveIt trajectory planning.",
+    technologies: "ROS, MoveIt, Python, CAD Design, Embedded Systems",
   },
   {
-    title: "Employee Onboarding Automation using UiPath",
-    description: "An automation workflow was created to streamline the teacher onboarding process...",
-    technologies: "UiPath, Excel, Email Automation, Web Scraping"
+    title: "Employee Onboarding Automation – UiPath",
+    description: "End-to-end RPA workflow for HR onboarding including form processing, email dispatch, and Excel record management.",
+    technologies: "UiPath, Excel, Email Automation, Web Scraping",
   },
   {
-    title: "Vision Model Fine-Tuning Using DPO",
-    description: "This project focuses on fine-tuning the Qwen vision-language model using DPO...",
-    technologies: "DPO, Qwen Model, LLaMA, Python, Deep Learning"
+    title: "Vision Model Fine-Tuning via DPO",
+    description: "Fine-tuned Qwen VLM using Direct Preference Optimization with curated preference data for multimodal alignment.",
+    technologies: "DPO, Qwen Model, LLaMA, Python, Deep Learning",
   },
   {
-    title: "IMU-Based Athlete Speed Monitoring and Django Dashboard",
-    description: "A system developed to measure and analyze the running speed of athletes...",
-    technologies: "Arduino, Django, Python, REST APIs, HTML/CSS, Data Visualization"
-  }
+    title: "IMU Athlete Speed Monitor & Django Dashboard",
+    description: "Real-time athlete speed analytics system with Arduino IMU sensors, Python signal processing, and a live Django dashboard.",
+    technologies: "Arduino, Django, Python, REST APIs, HTML/CSS, Data Visualization",
+  },
 ];
 
-const formatTechnologies = (techString) =>
-  techString.split(',').map(t => t.trim()).join(' | ');
+const formatTech = (s) => s.split(",").map((t) => t.trim());
 
 export default function ProjectsFiltered({ selectedSkill }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setLoading(true);
-    const timer = setTimeout(() => setLoading(false), 1000);
-    return () => clearTimeout(timer);
+    const t = setTimeout(() => setLoading(false), 700);
+    return () => clearTimeout(t);
   }, [selectedSkill]);
 
-  const filtered = projects.filter(project =>
-    project.technologies.toLowerCase().includes(selectedSkill.toLowerCase())
+  const filtered = projects.filter((p) =>
+    p.technologies.toLowerCase().includes(selectedSkill.toLowerCase())
   );
 
   if (!filtered.length) return null;
 
-  const dotAnimation = {
-    y: [0, -12, 0],
-    boxShadow: [
-      "0 0 0px rgba(255,105,180,0.5)",
-      "0 0 10px rgba(255,105,180,1)",
-      "0 0 0px rgba(255,105,180,0.5)"
-    ],
-    transition: { yoyo: Infinity, duration: 0.5 }
-  };
-
   return (
     <motion.section
-      className="py-10 px-6 max-w-5xl mx-auto relative z-10 bg-black bg-opacity-40 backdrop-blur-md rounded-2xl mb-10"
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -10 }}
+      transition={{ duration: 0.4 }}
+      style={{ padding: "0 24px 40px", maxWidth: 860, margin: "0 auto" }}
     >
-      <h3 className="text-2xl font-bold mb-6 text-center bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-500">
-        Projects using "{selectedSkill}"
-      </h3>
+      <div style={{
+        background: "rgba(0,245,255,0.04)",
+        border: "1px solid rgba(0,245,255,0.12)",
+        borderRadius: 16,
+        padding: "24px 28px",
+      }}>
+        <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.72rem", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(0,245,255,0.7)", marginBottom: 16 }}>
+          Filtered by: <span style={{ color: "#00f5ff" }}>{selectedSkill}</span> · {filtered.length} project{filtered.length !== 1 ? "s" : ""}
+        </p>
 
-      {loading ? (
-        <div className="flex flex-col items-center gap-4 mt-10">
-          <div className="flex gap-4">
+        {loading ? (
+          <div style={{ display: "flex", gap: 8, alignItems: "center", padding: "12px 0" }}>
             {[0, 1, 2].map((i) => (
               <motion.div
                 key={i}
-                className="w-4 h-4 bg-pink-500 rounded-full shadow-[0_0_10px_rgba(255,105,180,0.7)]"
-                animate={dotAnimation}
-                transition={{ delay: i * 0.2, yoyo: Infinity, duration: 0.5 }}
+                animate={{ opacity: [0.3, 1, 0.3] }}
+                transition={{ repeat: Infinity, duration: 1, delay: i * 0.2 }}
+                style={{ width: 6, height: 6, borderRadius: "50%", background: "#00f5ff" }}
               />
             ))}
           </div>
-          <p className="text-pink-400 text-sm italic tracking-wide animate-pulse">
-            Loading projects...
-          </p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-          {filtered.map((project, idx) => (
-            <div key={idx} className="bg-glass p-6 rounded-2xl shadow-2xl text-center">
-              <p className="text-xl font-bold text-cyan-400 mb-2">{project.title}</p>
-              <p className="text-gray-300 text-sm mb-2">{project.description}</p>
-              <p className="text-purple-400 text-xs italic">{formatTechnologies(project.technologies)}</p>
-            </div>
-          ))}
-        </div>
-      )}
+        ) : (
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            {filtered.map((p, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, x: -12 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: i * 0.07 }}
+                style={{
+                  background: "rgba(255,255,255,0.03)",
+                  border: "1px solid rgba(255,255,255,0.07)",
+                  borderRadius: 12,
+                  padding: "14px 18px",
+                }}
+              >
+                <p style={{ fontWeight: 700, fontSize: "0.9rem", color: "#fff", marginBottom: 5 }}>{p.title}</p>
+                <p style={{ fontSize: "0.8rem", color: "rgba(255,255,255,0.5)", marginBottom: 10, lineHeight: 1.5 }}>{p.description}</p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
+                  {formatTech(p.technologies).map((t) => (
+                    <span
+                      key={t}
+                      className="pill"
+                      style={t.toLowerCase() === selectedSkill.toLowerCase() ? {
+                        background: "rgba(0,245,255,0.15)",
+                        borderColor: "rgba(0,245,255,0.4)",
+                        color: "#00f5ff",
+                      } : {}}
+                    >
+                      {t}
+                    </span>
+                  ))}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        )}
+      </div>
     </motion.section>
   );
 }

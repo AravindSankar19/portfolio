@@ -1,78 +1,147 @@
-// education.jsx
 import { motion } from "framer-motion";
 
 const educationData = [
-  { 
-    institution: "University of Manchester", 
-    degree: "MSc Robotics", 
-    score: "2025 – Present", 
-    logo: `${import.meta.env.BASE_URL}university_of_manchester.png` 
+  {
+    institution: "University of Manchester",
+    degree: "MSc Robotics",
+    period: "2025 – Present",
+    logo: "university_of_manchester.png",
+    accent: "#00f5ff",
+    note: "Currently enrolled",
   },
-  { 
-    institution: "Vellore Institute of Technology", 
-    degree: "B.Tech in CSE (AI & Robotics)", 
-    score: "CGPA: 8.5 | 2021 – 2025", 
-    logo: `${import.meta.env.BASE_URL}vit.png` 
+  {
+    institution: "Vellore Institute of Technology",
+    degree: "B.Tech in CSE (AI & Robotics)",
+    period: "2021 – 2025",
+    score: "CGPA: 8.5",
+    logo: "vit.png",
+    accent: "#9b5de5",
   },
-  { 
-    institution: "The Grove School (NIOS)", 
-    degree: "Class XII", 
-    score: "84.6%", 
-    logo: `${import.meta.env.BASE_URL}nios.jpg` 
+  {
+    institution: "The Grove School (NIOS)",
+    degree: "Class XII",
+    period: "",
+    score: "84.6%",
+    logo: "nios.jpg",
+    accent: "#f472b6",
   },
-  { 
-    institution: "GSS Jain Vidyalaya", 
-    degree: "Class X", 
-    score: "86.8%", 
-    logo: `${import.meta.env.BASE_URL}gss_jain.jpeg` 
+  {
+    institution: "GSS Jain Vidyalaya",
+    degree: "Class X",
+    period: "",
+    score: "86.8%",
+    logo: "gss_jain.jpeg",
+    accent: "#fb923c",
   },
 ];
 
-// ... rest of your Education.jsx code remains the same
-
-
 export default function Education() {
+  const base = import.meta.env.BASE_URL;
+
   return (
     <motion.section
       id="education"
-      className="py-20 px-6 max-w-4xl mx-auto relative z-10"
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 1 }}
+      style={{ padding: "100px 24px", maxWidth: 860, margin: "0 auto" }}
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      viewport={{ once: true, amount: 0.15 }}
+      transition={{ duration: 0.6 }}
     >
-      <h2 className="text-4xl font-bold mb-12 text-center bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-500">
-        🎓 Education Timeline
-      </h2>
+      {/* Header */}
+      <div style={{ textAlign: "center", marginBottom: 56 }}>
+        <p className="section-label" style={{ marginBottom: 12 }}>Academic Background</p>
+        <h2 style={{
+          fontSize: "clamp(2rem, 5vw, 3rem)",
+          fontWeight: 900,
+          background: "linear-gradient(135deg, #ffffff, rgba(155,93,229,0.8))",
+          WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent",
+          marginBottom: 16,
+        }}>
+          Education
+        </h2>
+        <div className="h-divider" />
+      </div>
 
-      <div className="relative border-l-4 border-purple-400/50 ml-6">
+      {/* Timeline */}
+      <div style={{ position: "relative", paddingLeft: 36 }}>
+        {/* Vertical line */}
+        <div style={{
+          position: "absolute",
+          left: 11,
+          top: 8,
+          bottom: 8,
+          width: 2,
+          background: "linear-gradient(to bottom, rgba(0,245,255,0.5), rgba(155,93,229,0.3), transparent)",
+          borderRadius: 2,
+        }} />
+
         {educationData.map((edu, idx) => (
           <motion.div
             key={idx}
-            className="mb-10 ml-6 relative"
-            initial={{ opacity: 0, x: -30 }}
+            initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: idx * 0.2 }}
+            transition={{ duration: 0.55, delay: idx * 0.12 }}
+            style={{ position: "relative", marginBottom: idx < educationData.length - 1 ? 20 : 0 }}
           >
-            {/* Timeline Marker */}
-            <div className="absolute -left-6 top-2 w-4 h-4 bg-pink-500 rounded-full ring-4 ring-purple-400/50"></div>
+            {/* Dot */}
+            <div style={{
+              position: "absolute",
+              left: -30,
+              top: 20,
+              width: 12, height: 12,
+              borderRadius: "50%",
+              background: edu.accent,
+              boxShadow: `0 0 10px ${edu.accent}80`,
+            }} />
 
-            {/* Content Card */}
-            <div className="bg-glass p-6 rounded-3xl shadow-2xl hover:-translate-y-2 transition-transform text-center">
-              {/* Institution Logo */}
-              <img
-                src={edu.logo}
-                alt={edu.institution}
-                className="mx-auto mb-4 w-12 h-12 object-contain rounded-full"
-              />
-              
-              {/* Institution Name */}
-              <p className="text-white font-extrabold text-3xl mb-1">{edu.institution}</p>
-              
-              {/* Degree and Score */}
-              <p className="text-white font-semibold mb-1">{edu.degree}</p>
-              <p className="text-white">{edu.score}</p>
+            <div
+              className="glass"
+              style={{ padding: "20px 24px", display: "flex", gap: 18, alignItems: "center" }}
+            >
+              {/* Logo */}
+              <div style={{
+                flexShrink: 0,
+                width: 48, height: 48,
+                borderRadius: 12,
+                background: "rgba(255,255,255,0.05)",
+                border: `1px solid ${edu.accent}33`,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                overflow: "hidden",
+              }}>
+                <img src={`${base}${edu.logo}`} alt={edu.institution} style={{ width: 36, height: 36, objectFit: "contain" }} />
+              </div>
+
+              {/* Info */}
+              <div style={{ flex: 1 }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: 6 }}>
+                  <div>
+                    <p style={{ fontWeight: 700, fontSize: "1rem", color: "#fff" }}>{edu.institution}</p>
+                    <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.55)", marginTop: 2 }}>{edu.degree}</p>
+                  </div>
+                  <div style={{ textAlign: "right" }}>
+                    {edu.period && (
+                      <span style={{
+                        fontFamily: "var(--font-mono)",
+                        fontSize: "0.7rem",
+                        color: edu.accent,
+                      }}>
+                        {edu.period}
+                      </span>
+                    )}
+                    {edu.score && (
+                      <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.72rem", color: "rgba(255,255,255,0.45)", marginTop: 2 }}>
+                        {edu.score}
+                      </p>
+                    )}
+                    {edu.note && (
+                      <p style={{ fontFamily: "var(--font-mono)", fontSize: "0.67rem", color: edu.accent, marginTop: 2 }}>
+                        {edu.note}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           </motion.div>
         ))}

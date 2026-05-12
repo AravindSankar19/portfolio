@@ -64,7 +64,7 @@ const researchAreas = [
 const links = [
   { label: "GitHub",      Icon: IconGitHub,   href: "https://github.com/Aravind12390",      download: false },
   { label: "LinkedIn",    Icon: IconLinkedIn, href: "https://linkedin.com/in/aravind-sankar-995795270",   download: false },
-  { label: "CV / Résumé", Icon: IconCV,       href: "aravind-portfolio/src/assets/cv.pdf", download: true  },
+  { label: "CV / Résumé", Icon: IconCV,       href: "cv.pdf", download: true  },
 ];
 
 // ── Animation variants ────────────────────────────────────────────────────────
