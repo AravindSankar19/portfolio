@@ -18,7 +18,7 @@ const educationData = [
     accent: "#9b5de5",
   },
   {
-    institution: "The Grove School (NIOS)",
+    institution: "The Grove School",
     degree: "Class XII",
     period: "",
     score: "84.6%",
